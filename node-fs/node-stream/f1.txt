@@ -1,0 +1,4 @@
+Questo contenuto
+Verrà gestito mediante tream di dati con un parametro 
+hightWaterMark pari a 16, ovvero ogni
+16 bite, levento verrà sollevato e catturato dall'oggetto readble

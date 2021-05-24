@@ -1,0 +1,14 @@
+{
+  "name": "npm-readdirp",
+  "version": "1.0.0",
+  "description": "Lettore contenuto cartelle e sottocartelle",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Antonio Quattrocchi",
+  "license": "ISC",
+  "dependencies": {
+    "readdirp": "^3.6.0"
+  }
+}
