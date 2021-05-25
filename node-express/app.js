@@ -2,33 +2,17 @@ const express = require('express');
 
 const app = express();
 
-//routing
+//http://expressjs.com/it/api.html#app.set
 
-app.get('/', (req, resp) => {
-  console.log('Nuova richiesta GET alla rotta root');
-  resp.send("<h1>Benvenuto</h1>\n")
-}); // per ottenere una risorsa
-
-app.post('/', (req, resp) => {
-  console.log('Nuova richiesta POST alla rotta root');
-  resp.send("<h1>Benvenuto</h1>\n")
-});// per creare una nuova risorsa
-
-app.put('/', (req, resp) => {
-  console.log('Nuova richiesta PUT alla rotta root');
-  resp.send("<h1>Benvenuto</h1>\n")
-});//per aggiornarla
-
-app.delete('/', (req, resp) => {
-  console.log('Nuova richiesta DELETE alla rotta root');
-  resp.send("<h1>Benvenuto</h1>\n")
-});// per eliminarla
-// con express utiliziamo send al posnto di end per inviare una risposta
-
-app.get('/blog', (req, resp) => {
-  console.log('nuova richiesta GET alla rotta /blog');
-  resp.send("<h1>Benvenuto nel blog</h1>")
+//app.set('nomeApp','Prima applicazione Express');
+app.set('case sensitive routing',true);
+//oppure
+app.enable('case sensitive routing'); // in questo modo abbiamo abilitato l'impostazione case sensitive
+app.disable('x-powered-by');
+app.get('/blog',(req,res) => {
+  res.send('ok\n');
 });
+//console.log(app.get('nomeApp'));
 
 
 app.listen(3000);
