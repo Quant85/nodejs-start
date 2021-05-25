@@ -1,25 +1,24 @@
+const path = require('path');
 const express = require('express');
 const app = express();
 
-//app.use(express.json()); //express.json() ritorna una funzione middleware
 
-app.use(express.text()); //express.text() ritorna una funzione middleware
+//app.use( express.static('public')); //express.static() ritorna una funzione middleware
+//public è la cartella root delle risorse statiche, quindi nell'url non va inserita
 
-app.post('/',(req,res) => {
-  console.log(req.body);
-  res.send();
-})
+//http://localhost:3000/img/sfondo.jpeg
+
+//uso di una cartella virtuale /assets
+//app.use('/assets', express.static('public')); //express.static() ritorna una funzione middleware
+///assets è una cartella virtuale dove troveremo i nostri file statici. In questo caso per accedere a questa risorsa dobbiamo indicare questa cartella
+
+//http://localhost:3000/assets/img/sfondo.jpeg
+
+// -- possiamo anche usare un percorso assoluto grazie all'impiego del modulo nativo path
+
+app.use( express.static(path.join(__dirname,'public'))); //path.join() ci permette di unire due percorsi e risolverli in un percorso assoluto
+
+//http://localhost:3000/img/sfondo.jpeg
+
 
 app.listen(3000);
-
-
-// ╰─➤  curl -d '{ "nome": "Sara" }' -H "Content-Type: application/json"  -X POST localhost:3000
-
-// [nodemon] starting `node test.js`
-// { nome: 'Sara' }
-
-
-// ╰─➤  curl -d 'Invio di testo semplice' -H "Content-Type: text/plain" -X POST localhost:3000
-
-// [nodemon] starting `node test.js`
-// Invio di testo semplice
