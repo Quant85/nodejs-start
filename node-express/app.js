@@ -2,6 +2,7 @@ const express = require('express');
 
 const app = express();
 
+
 //http://expressjs.com/it/api.html#app.set
 
 //app.set('nomeApp','Prima applicazione Express');
@@ -49,8 +50,15 @@ function terza(req, res) {
 
 //------
 
-app.get('/user/risorsa-premium', checkAuthentication, checkAuthorization, (req, res) => {
+app.use('/user',checkAuthentication,checkAuthorization); // cosi stiamo chiedendo che ad ogni richiesta che viene effettuata di applicare le funzioni checkAuthentication e checkAuthorization
+
+app.get('/user/risorsa-premium', (req, res) => {
   res.send('Ecco a te la risorsa premium...\n');// termina il cilco
+  //contiene tre funzioni middleware, l'ultima definita direttamente
+});
+
+app.get('/contatti', (req, res) => {
+  res.send('Pagina contatti\n');// termina il cilco
   //contiene tre funzioni middleware, l'ultima definita direttamente
 });
 
