@@ -20,10 +20,10 @@ app.get('/blog',(req,res) => {
 // { anno: '2020', mese: '8' }
 
 
-app.get('/blog/:anno/:mese',(req,res) => {
-  console.log(req.params);
-  res.send('ok\n');
-});
+// app.get('/blog/:anno/:mese',(req,res) => {
+//   console.log(req.params);
+//   res.send('ok\n');
+// });
 
 //http://localhost:3000/blog/2020/8
 // { anno: '2020', mese: '8' }
@@ -36,6 +36,10 @@ app.get('/blog/:anno/:mese',(req,res) => {
 });
 
 //http://localhost:3000/blog/2020/8?ordinaPer=titolo
+
+// [nodemon] starting `node app.js`
+// { anno: '2000', mese: '8' } //parametri di rotta che vanno conosciuti per poter ottenere una risposta dal client
+// { ordinaPer: 'titolo' } // sintassi classica per informazioni non necessarie a fin che otteniamo una risposta dal client
 
 
 
