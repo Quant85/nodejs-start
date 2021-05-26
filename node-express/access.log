@@ -1,0 +1,4 @@
+::1 - - [26/May/2021:09:18:01 +0000] "GET / HTTP/1.1" 200 13 "-" "curl/7.76.1"
+::1 - - [26/May/2021:09:18:09 +0000] "GET / HTTP/1.1" 200 14 "-" "curl/7.76.1"
+::1 - - [26/May/2021:09:18:57 +0000] "GET / HTTP/1.1" 200 14 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36"
+::1 - - [26/May/2021:09:18:58 +0000] "GET /favicon.ico HTTP/1.1" 404 150 "http://localhost:3000/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36"

@@ -1,3 +1,4 @@
+const morgan = require('morgan')
 const responseTime = require('response-time')
 const path = require('path');
 const express = require('express');
@@ -23,11 +24,18 @@ app.use( express.static(path.join(__dirname,'public'))); //path.join() ci permet
 
 app.use(responseTime());
 
+app.use(morgan('tiny'));
+
 app.get('/', (req, res) => {
   res.send();
 })
 
 //╰─➤  curl -D - localhost:3000/   
 //X-Response-Time: 0.393ms // tempo di risposta alla richiesta
+
+//╰─➤  curl localhost:3000/ 
+//GET / 200 - - 1.522 ms
+
+//Un'informazione più interessante è quella di poter trascrivere le informazioni sulle richieste in un file log
 
 app.listen(3000);
