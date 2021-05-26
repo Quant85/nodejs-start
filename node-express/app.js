@@ -1,67 +1,45 @@
+// --- Invocazione dei vari moduli
+const fs = require('fs');
+
+const morgan = require('morgan');
+const helmet = require('helmet');
+
 const express = require('express');
 
-const app = express();
+const app = express(); //creiamo l'oggetto app
+const log = fs.createReadStream('logs/access.log', { flags: a}); //creiamo lo stream scrivibile per il file access.log
 
 
 //http://expressjs.com/it/api.html#app.set
-
-//app.set('nomeApp','Prima applicazione Express');
-app.set('case sensitive routing',true);
-//oppure
-app.enable('case sensitive routing'); // in questo modo abbiamo abilitato l'impostazione case sensitive
-app.disable('x-powered-by');
-
-
-
-// Funzioni middleware
-//http://expressjs.com/it/guide/using-middleware.html#utilizzo-del-middleware
-
-/**
- * Express è un framework Web di routing e middleware, con funzionalità sua propria minima: 
- * un’applicazione Express è essenzialmente a serie di chiamate a funzioni middleware.
- */
-
-app.get('/', prima, seconda, terza);
-
-//definiamo le funzioni middleware esternamente
-
-/** Cosa può fare una funzione middleware?
- * Può eseguire qualsiasi codice necessario
- * Può terminare il ciclo richiesta risposta
- * Può invocaree la successiva funzione middleware
- * Può modificare l'oggetto response request
- */
-
-function prima(req, res, next) {
-  console.log('Nuova richiesta ricevuta dalla prima middleware');
-  next();
-};
-
-function seconda(req, res, next) {
-  console.log('Nuova richiesta ricevuta dalla seconda middleware');
-  next();
-};
-
-function terza(req, res) {
-  console.log('Nuova richiesta ricevuta dalla terza middleware');
-  res.send('ok\n');// termina il cilco richiesta-risposta
-};
-
-
-//------
-
+app.use(morgan('combined', { stream: log})); //attiviamo morgan
+app.use(helmet());// attiviamo helmet
 app.use('/user',checkAuthentication,checkAuthorization); // cosi stiamo chiedendo che ad ogni richiesta che viene effettuata di applicare le funzioni checkAuthentication e checkAuthorization
 
 app.get('/user/risorsa-premium', (req, res) => {
-  res.send('Ecco a te la risorsa premium...\n');// termina il cilco
-  //contiene tre funzioni middleware, l'ultima definita direttamente
+  res.send('Ecco a te la risorsa premium...\n');
+});
+
+app.get('/', (req, res) => {
+  res.send('Pagina Home\n');
 });
 
 app.get('/contatti', (req, res) => {
-  res.send('Pagina contatti\n');// termina il cilco
-  //contiene tre funzioni middleware, l'ultima definita direttamente
+  res.send('Pagina contatti\n');
 });
 
+app.get('/blog/articoli', (req, res) => {
+  res.send('Pagina articoli\n');
+});
+
+app.get('/blog/articoli/:titolo', (req, res) => {
+  res.send('Pagina articoli\n');
+});
+
+app.get('*', (req, res) => {
+  res.status(404).send('Not Found\n');
+});
+
+//Controllo autenticazione
 function checkAuthentication(req,res,next) { 
   const isLogged = true; // false - non loggato, true loggato
   if(!isLogged) return res.status(401).send('Non sei autenticato\n'); 
@@ -71,7 +49,7 @@ function checkAuthentication(req,res,next) {
   next();
 }
 
-
+//Controllo autorizzazione
 function checkAuthorization(req,res,next) { 
   const isAutorizzato = req.user.tipo === 'Premium'? true : false;
   if(!isAutorizzato) return res.status(403).send('Non sei autorizzato\n');
