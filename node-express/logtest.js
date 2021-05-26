@@ -11,7 +11,7 @@ var accessLogStream = fs.createWriteStream(path.join(__dirname,'logs', 'access.l
 // setup the logger
 app.use(morgan('combined', { stream: accessLogStream })) //per attivare morgan e scrivere le info nel file 
 
-app.get('/', function (req, res) {
+app.get('/prova', function (req, res) {
   res.send('hello, world!\n')
 })
 
