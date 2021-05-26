@@ -1,3 +1,4 @@
+const responseTime = require('response-time')
 const path = require('path');
 const express = require('express');
 const app = express();
@@ -20,5 +21,13 @@ app.use( express.static(path.join(__dirname,'public'))); //path.join() ci permet
 
 //http://localhost:3000/img/sfondo.jpeg
 
+app.use(responseTime());
+
+app.get('/', (req, res) => {
+  res.send();
+})
+
+//╰─➤  curl -D - localhost:3000/   
+//X-Response-Time: 0.393ms // tempo di risposta alla richiesta
 
 app.listen(3000);
