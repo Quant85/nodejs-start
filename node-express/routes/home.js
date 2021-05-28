@@ -1,11 +1,12 @@
 const express = require('express');
+const ErrorHandler = require('../helper/ErrorHandler');
 const router = express.Router(); //creiamo una nuova istanza di tipo Router
 
 const timeout = 50;
 
 router.get('/', (req, res, next) => {
   //solleviamo l'errore e lo gestiamo nel modulo middleware/error.js
-  throw new Error('Errore della rotta root!');
+  throw new ErrorHandler(401,'Richiesta non corretta. Dovevi fare...');
   res.send('Pagina Home\n');
 });
 
