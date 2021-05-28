@@ -2,24 +2,20 @@
 const express = require('express');
 
 // le cinque sotto-applicazioni
-const homeRouter = require('./routes/home');
-const userRouter = require('./routes/user');
-const blogRouter = require('./routes/blog');
-const _404Router = require('./routes/404');
-const { userAuth, userPerms } = require('./middleware/user-auth');
+const home = require('./routes/home');
+const user = require('./routes/user');
+const blog = require('./routes/blog');
+const _404 = require('./routes/404');
 const appError = require('./middleware/error');
 
 const app = express(); //creiamo l'oggetto app
 
-
+app.use(express.static('public'));
 //http://expressjs.com/it/api.html#app.set
-
-app.use('/user', userAuth, userPerms); // cosi stiamo chiedendo che ad ogni richiesta che viene effettuata di applicare le funzioni userAuth e userPerms
-
-app.use(homeRouter);
-app.use(userRouter);
-app.use('/blog',blogRouter);
-app.use(_404Router);
+app.use('/blog',blog);
+app.use('/user',user);
+app.use(home);
+app.use(_404);
 
 //Gestione personalizzata degli errori
 app.use(appError);
