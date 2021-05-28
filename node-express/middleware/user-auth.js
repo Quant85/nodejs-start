@@ -5,7 +5,7 @@ function userAuth(req,res,next) {
   if(!isLogged) return res.status(401).send('Non sei autenticato\n'); 
   //termina il ciclo
   //modificare l'oggeto req o res ci permette di passare delle informazioni da una funzione middleware ad un'altra
-  req.user = { nome: 'Sara', tipo: 'Standard' }; // informazione passata all'altra funzione middleware - Premium
+  req.user = { nome: 'Sara', tipo: 'Premium' }; // informazione passata all'altra funzione middleware - Premium
   next();
 }
 
