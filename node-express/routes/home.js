@@ -4,10 +4,8 @@ const router = express.Router(); //creiamo una nuova istanza di tipo Router
 const timeout = 50;
 
 router.get('/', (req, res, next) => {
-  setTimeout(() => {
-    next(new Error('Errore...'));
-  }, timeout);
-  //throw new Error('Errore...');
+  //solleviamo l'errore e lo gestiamo nel modulo middleware/error.js
+  throw new Error('Errore della rotta root!');
   res.send('Pagina Home\n');
 });
 

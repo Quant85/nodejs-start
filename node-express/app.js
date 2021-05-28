@@ -7,6 +7,7 @@ const userRouter = require('./routes/user');
 const blogRouter = require('./routes/blog');
 const _404Router = require('./routes/404');
 const { userAuth, userPerms } = require('./middleware/user-auth');
+const appError = require('./middleware/error');
 
 const app = express(); //creiamo l'oggetto app
 
@@ -19,6 +20,9 @@ app.use(homeRouter);
 app.use(userRouter);
 app.use('/blog',blogRouter);
 app.use(_404Router);
+
+//Gestione personalizzata degli errori
+app.use(appError);
 
 app.listen(3000);
 
