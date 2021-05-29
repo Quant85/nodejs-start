@@ -8,6 +8,7 @@ router.get('/', (req, res, next) => {
   //solleviamo l'errore e lo gestiamo nel modulo middleware/error.js
   //throw new ErrorHandler(401,'Richiesta non corretta. Dovevi fare...');
   res.render('index', {
+    title: "Home Page",
     intestazione: "Home Page App",
     info: "Applicazione creata con Node.js",
   });

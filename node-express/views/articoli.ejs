@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %> </title>
+</head>
+
+<body>
+  <header>
+    <nav>
+      <ul>
+        <li><a href="#">link 1</a></li>
+        <li><a href="#">link 2</a></li>
+        <li><a href="#">link 3</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <!--  per scrivere codice javascript basta la sintassi <%  %> -->
+    <% elencoArticoli.forEach(articolo => { %>
+      <article>
+        <h1><%= articolo.titolo %> </h1>
+        <p><%= articolo.testo %></p>
+      </article>
+    <% }); %>
+  </main>
+
+  <footer>
+    <p>Tutti i diritti sono riservati</p>
+  </footer>
+</body>
+
+</html>
