@@ -9,6 +9,8 @@ const _404 = require('./routes/404');
 const appError = require('./middleware/error');
 
 const app = express(); //creiamo l'oggetto app
+//app.set('views','/views'); // indichiamo il set della cartella di default views dove saranno allocati i template. Essendo la cartella views la cartella di default potrebbe esser eliminata questa riga di codice
+app.set('view engine', 'ejs'); // indichiamo il tipo di template engine utilizzato, in questo caso ejs
 
 app.use(express.static('public'));
 //http://expressjs.com/it/api.html#app.set
