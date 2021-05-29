@@ -3,21 +3,11 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= title %> </title>
-    <link rel="stylesheet" href="/css/style.css">
+        <%- include('partials/head')  %>
   </head>
   <body>
     <header>
-      <nav>
-        <ul>
-          <li><a href="/">Home</a></li>
-          <li><a href="/blog/articoli">Blog</a></li>
-          <li><a href="/contatti">Contatti</a></li>
-        </ul>
-      </nav>
+          <%- include('partials/header')  %>
     </header>
 
     <main>
@@ -26,7 +16,7 @@
     </main>
 
     <footer>
-      <p>Tutti i diritti sono riservati</p>
+    <%- include('partials/footer')  %>
     </footer>
   </body>
 </html>
