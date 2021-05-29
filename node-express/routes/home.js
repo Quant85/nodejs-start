@@ -6,8 +6,11 @@ const timeout = 50;
 
 router.get('/', (req, res, next) => {
   //solleviamo l'errore e lo gestiamo nel modulo middleware/error.js
-  throw new ErrorHandler(401,'Richiesta non corretta. Dovevi fare...');
-  res.send('Pagina Home\n');
+  //throw new ErrorHandler(401,'Richiesta non corretta. Dovevi fare...');
+  res.render('index', {
+    intestazione: "Home Page App",
+    info: "Applicazione creata con Node.js",
+  });
 });
 
 module.exports = router;
