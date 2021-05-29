@@ -1,0 +1,22 @@
+<!-- Tutto quello che è valido in un file HTML è valido in un file EJS -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+        <%- include('partials/head')  %>
+  </head>
+  <body>
+    <header>
+          <%- include('partials/header')  %>
+    </header>
+
+    <main>
+      <h1 class="title"><%= intestazione %> </h1>
+      <p><%= info %> </p>
+    </main>
+
+    <footer>
+    <%- include('partials/footer')  %>
+    </footer>
+  </body>
+</html>

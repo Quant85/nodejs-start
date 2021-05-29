@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('partials/head')  %>
+</head>
+
+<body>
+  <header>
+    <%- include('partials/header')  %>
+  </header>
+
+  <main>
+    <!--  per scrivere codice javascript basta la sintassi <%  %> -->
+    <% elencoArticoli.forEach(articolo => { %>
+      <article>
+        <h1><%= articolo.titolo %> </h1>
+        <p><%= articolo.testo %></p>
+      </article>
+    <% }); %>
+  </main>
+
+  <footer>
+    <%- include('partials/footer')  %>
+  </footer>
+</body>
+
+</html>
