@@ -1,9 +1,7 @@
 const morgan = require('morgan');
 const express = require('express');
 const app = express();
-require('dotenv').config({
-  path: `.env.${app.get('env')}`
-});
+require('dotenv').config();
 
 // Configurazioni diverse in base ai diversi ambienti - configurazioni delle variabili d'ambiente
 console.log(process.env.NODE_ENV); // undefined

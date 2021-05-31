@@ -1,4 +1,7 @@
 // --- Invocazione dei vari moduli
+
+require('dotenv').config();
+
 const express = require('express');
 
 // le cinque sotto-applicazioni
