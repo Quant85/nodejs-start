@@ -10,7 +10,17 @@ const mongoClient = new MongoClient(dbURI, { useUnifiedTopology: true });
 let blogDB, articoliCollection;
 
 //Creare 
-app.get('/nuovo-articolo', (req,res) => {});
+app.get('/nuovo-articolo', async (req,res) => {
+  const articoli = [
+    { titolo: "Titolo articolo 2", testo: "Testo articolo 2", autore: "Lidia"},
+    { titolo: "Titolo articolo 3", testo: "Testo articolo 3", autore: "Michele"},
+    { titolo: "Titolo articolo 4", testo: "Testo articolo 4", autore: "Simone"},
+  ];
+  const ris = await articoliCollection.insertMany(articoli);
+  if (ris.insertedCount >= 1) {
+    res.send(`Sono stati inseriti ${ris.insertedCount} nella collezione articoli!`);
+  }
+});
 
 //Read
 app.get('/articolo', (req,res) => {});
