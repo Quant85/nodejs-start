@@ -23,7 +23,26 @@ app.get('/nuovo-articolo', async (req,res) => {
 });
 
 //Read
-app.get('/articolo', (req,res) => {});
+app.get('/articolo', async (req,res) => {
+  //const articolo = await articoliCollection.findOne({ titolo: "Titolo articolo 1"});
+  const cursor = articoliCollection.find({});
+  console.log(await cursor.count());
+  // await cursor.forEach(articolo => {
+  //   console.log(articolo);
+  // });
+  // for await (articolo of cursor) {
+  //   console.log(articolo);
+  // };
+  // const articolo1 = await cursor.next();
+  // const articolo2 = await cursor.next();
+  // console.log(articolo1,articolo2);
+  while (await cursor.hasNext()) {
+    const articolo = await cursor.next();
+    console.log(articolo);
+  }
+  //console.log(articolo.testo);
+  res.send();
+});
 
 //Update
 app.get('/modifica-articolo', (req,res) => {});
