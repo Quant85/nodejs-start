@@ -9,79 +9,39 @@ const mongoClient = new MongoClient(dbURI, { useUnifiedTopology: true });
 
 let blogDB, articoliCollection;
 
-//Creare 
-app.get('/nuovo-articolo', async (req,res) => {
-  const articoli = [
-    { titolo: "Titolo articolo 2", testo: "Testo articolo 2", autore: "Lidia"},
-    { titolo: "Titolo articolo 3", testo: "Testo articolo 3", autore: "Michele"},
-    { titolo: "Titolo articolo 4", testo: "Testo articolo 4", autore: "Simone"},
-  ];
-  const ris = await articoliCollection.insertMany(articoli);
-  if (ris.insertedCount >= 1) {
-    res.send(`Sono stati inseriti ${ris.insertedCount} nella collezione articoli!`);
-  }
-});
+app.get('/', async (req, res) => {
+  //Procedura di generazione dinamica dei documenti
+  // titolo, testo, autore, tags, voto
+  // const autori = ["Sofia", "Lidia", "Antonio"];
+  // const tags = ["node", "javascript", "ract", "html", "css"];
+  // const documenti = [];
 
-//Read
-app.get('/articolo', async (req,res) => {
-  //const articolo = await articoliCollection.findOne({ titolo: "Titolo articolo 1"});
-  const cursor = articoliCollection.find({});
-  console.log(await cursor.count());
-  // await cursor.forEach(articolo => {
-  //   console.log(articolo);
-  // });
-  // for await (articolo of cursor) {
-  //   console.log(articolo);
-  // };
-  // const articolo1 = await cursor.next();
-  // const articolo2 = await cursor.next();
-  // console.log(articolo1,articolo2);
-  while (await cursor.hasNext()) {
-    const articolo = await cursor.next();
+  // for (let i = 1; i < 25; i++) {
+  //   let randomIndexAutore = ~~(Math.random() * autori.length); //  ~~ questo operatore mi permette di troncare la parte decimale
+  //   let randomIndexTags = ~~(Math.random() * tags.length); //  ~~ questo operatore mi permette di troncare la parte decimale
+  //   let votoRandom = Math.random() * 5;
+  //   documenti.push({
+  //     titolo: `Titolo articolo ${i}`,
+  //     testo: `Testo articolo ${i}`,
+  //     autore: autori[randomIndexAutore],
+  //     tags:[tags[randomIndexTags]],
+  //     voto: +votoRandom.toFixed(1) // coercizione +
+  //   });
+  // }
+  // const ris = await articoliCollection.insertMany(documenti);
+  // console.log(ris.insertedCount);
+  // -- End -- Procedura di generazione dinamica dei documenti -- End --
+
+  //const articoli = articoliCollection.find({}).limit(3); // il metodo limit mi restituisce un numero limitato di risultati
+  //const articoli = articoliCollection.find({}).sort({voto: 1}); // ordinare in valore crescente di voto con il metodo sort 
+  //const articoli = articoliCollection.find({}).sort({voto: -1}); // ordinare in valore decrescente di voto con il metodo sort 
+  //const articoli = articoliCollection.find({}).limit(3).sort({voto: -1}); // concatenazione di limit e sort, ottengo solo i primi tre articoli con voto più alto 
+  const articoli = articoliCollection.find({}).limit(3).skip(1).sort({voto: -1}); // i primi tre articoli con voto più alto ma dopo il primo articolo, uso skip
+  for await(articolo of articoli) {
     console.log(articolo);
   }
-  //console.log(articolo.testo);
   res.send();
 });
-
-//Update
-app.get('/modifica-articolo', async (req,res) => {
-  // const update =  {
-  //   $set: {
-  //     autore: "Andrea"
-  //   }
-  // };
-  // const filter = { _id:ObjectID("60b5f6ba89e19f6f0943ba0e")};
-
-  // const ris = await articoliCollection.updateOne(filter, update);
-  // console.log(ris.result.nModified);
-
-  // articoliCollection.find({}).forEach(articolo => {
-  //   let voto = Math.random() * 5;
-  //   articoliCollection.updateOne({ _id: articolo._id}, { $set: { voto: +voto.toFixed(1) } })
-  // });
-  // aggiornare più di un singolo documento updateMany
-
-  const ris = await articoliCollection.updateMany({}, { $inc: { voto: 0.5}}); // incremento il voto di ogni oggetto di 0.5
-  res.send();
-});
-
-//Delete
-app.get('/cancella-articolo', async (req,res) => {
-  // const ris = await articoliCollection.deleteOne({ _id: ObjectID('60b601e48f73d9800c4f5ad2')});
-  // console.log(ris.deletedCount);
-  // Cancellare tutti gli articolo con un voto maggiore o uguale a 4
-
-  const filtro = {
-    voto: {
-      $gte: 4
-    }
-  };
-  const ris = await articoliCollection.deleteMany(filtro);
-  console.log(ris.deletedCount);
-  res.send();
-});
-
 
 async function run() { 
   await mongoClient.connect();
