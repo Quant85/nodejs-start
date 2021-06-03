@@ -67,7 +67,20 @@ app.get('/modifica-articolo', async (req,res) => {
 });
 
 //Delete
-app.get('/cancella-articolo', (req,res) => {});
+app.get('/cancella-articolo', async (req,res) => {
+  // const ris = await articoliCollection.deleteOne({ _id: ObjectID('60b601e48f73d9800c4f5ad2')});
+  // console.log(ris.deletedCount);
+  // Cancellare tutti gli articolo con un voto maggiore o uguale a 4
+
+  const filtro = {
+    voto: {
+      $gte: 4
+    }
+  };
+  const ris = await articoliCollection.deleteMany(filtro);
+  console.log(ris.deletedCount);
+  res.send();
+});
 
 
 async function run() { 
