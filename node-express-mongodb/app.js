@@ -1,5 +1,5 @@
 const express = require('express');
-const { MongoClient } = require('mongodb');
+const { MongoClient, ObjectID } = require('mongodb');
 
 const app = express();
 
@@ -45,7 +45,26 @@ app.get('/articolo', async (req,res) => {
 });
 
 //Update
-app.get('/modifica-articolo', (req,res) => {});
+app.get('/modifica-articolo', async (req,res) => {
+  // const update =  {
+  //   $set: {
+  //     autore: "Andrea"
+  //   }
+  // };
+  // const filter = { _id:ObjectID("60b5f6ba89e19f6f0943ba0e")};
+
+  // const ris = await articoliCollection.updateOne(filter, update);
+  // console.log(ris.result.nModified);
+
+  // articoliCollection.find({}).forEach(articolo => {
+  //   let voto = Math.random() * 5;
+  //   articoliCollection.updateOne({ _id: articolo._id}, { $set: { voto: +voto.toFixed(1) } })
+  // });
+  // aggiornare più di un singolo documento updateMany
+
+  const ris = await articoliCollection.updateMany({}, { $inc: { voto: 0.5}}); // incremento il voto di ogni oggetto di 0.5
+  res.send();
+});
 
 //Delete
 app.get('/cancella-articolo', (req,res) => {});
