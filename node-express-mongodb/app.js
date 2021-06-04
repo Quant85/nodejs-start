@@ -10,11 +10,14 @@ const mongoClient = new MongoClient(dbURI, { useUnifiedTopology: true });
 let blogDB, articoliCollection;
 
 app.get('/', async (req, res) => {
-  const filtro = { in_evidenza: { $exists: true } };
-  // Per rimuovere il campo in_evidenza da questi documenti, definiamo un oggetto update con l'0peratore $unset mediante il quale al campo in_evidenza assegnamo una stringa vuota
-  const update = { $unset: { in_evidenza: "" } };
-  await articoliCollection.updateMany(filtro, update);
-  articoliCollection.find(filtro).forEach(articolo => {
+  //60b5f6ba89e19f6f0943ba0e
+  // incrementiamo il campo voto con l'operatore $inc
+  const filtro = { _id: ObjectID('60b5f6ba89e19f6f0943ba0e') };
+  // cosa vogliamo incrementare e di quanto
+  const update = { $inc: { voto: - 0.2 } };
+  await articoliCollection.updateOne(filtro, update);
+
+  articoliCollection.findOne({}).then(articolo => {
     console.log(articolo);
   });
 
