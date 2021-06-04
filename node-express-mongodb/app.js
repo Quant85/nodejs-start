@@ -36,10 +36,27 @@ app.get('/', async (req, res) => {
   //const articoli = articoliCollection.find({}).sort({voto: 1}); // ordinare in valore crescente di voto con il metodo sort 
   //const articoli = articoliCollection.find({}).sort({voto: -1}); // ordinare in valore decrescente di voto con il metodo sort 
   //const articoli = articoliCollection.find({}).limit(3).sort({voto: -1}); // concatenazione di limit e sort, ottengo solo i primi tre articoli con voto più alto 
-  const articoli = articoliCollection.find({}).limit(3).skip(1).sort({voto: -1}); // i primi tre articoli con voto più alto ma dopo il primo articolo, uso skip
-  for await(articolo of articoli) {
-    console.log(articolo);
+  // const articoli = articoliCollection.find({}).limit(3).skip(1).sort({voto: -1}); // i primi tre articoli con voto più alto ma dopo il primo articolo, uso skip
+  // for await(articolo of articoli) {
+  //   console.log(articolo);
+  // }
+
+  // voglio solo gli articoli dell'autore definito nel filtro - operatore $in
+  const filtro = {
+    autore: {
+      $in: ["Antonio", "Sofia"]
+      //$nin: ["Antonio", "Sofia"] //articoli che non hanno come autore Antonio o Sofia
+    },
+    voto : {
+      $gte: 3.8, // che hanno un voto superiore o uguale a 3.8
+      $lte:4.5  // in questo modo do un range di voto fino a 4.5
+    }
   }
+  const articoliCursor = await articoliCollection.find(filtro);
+  while (await articoliCursor.hasNext()) {
+    console.log(await articoliCursor.next());
+  }
+  console.log(await articoliCursor.count());
   res.send();
 });
 
