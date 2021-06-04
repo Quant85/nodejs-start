@@ -44,10 +44,25 @@ app.get('/', async (req, res) => {
   //Andiamo ad aggiornare gli articoli che rispettano la condisione voto maggiore o uguale a 3.5, andando ad aggiungere con l'operatore $set, il campo in_veidenza: true
   // const ris = await articoliCollection.updateMany({ voto: { $gte: 3.5 } }, { $set: { in_evidenza: true } });
   // console.log(ris.result.nModified);
-  // Per recuperare i documenti che hanno il campo in_evidenza, possiamo utilizzare l'operatore $exists
-  articoliCollection.find({ in_evidenza: { $exists: true } }).forEach(articolo => {
-    console.log(articolo);
-  });
+
+  // const articolo = await articoliCollection.findOne({});
+  // console.log(articolo._id); //60b5f6ba89e19f6f0943ba0e
+
+  // const update = { $set: { testo: "Articolo che parla di es58" } };
+  // const ris = await articoliCollection.updateOne({ _id: ObjectID('60b5f6ba89e19f6f0943ba0e') }, update);
+  // console.log(ris.result.nModified);
+
+  const reg = { 
+    testo: { 
+      //vogliamo la sequesnza con es seguito da zero oppure -, a cui deve seguire un numero 5 oppure 6
+      $regex: /es-?[5-6]/
+    }
+  };
+  const articoli = articoliCollection.find(reg);
+  for await(articolo of articoli) {
+    console.log(articolo); // stiamo recuperando la "sequenza es5 non la parola es5" prima di es5 o dopo es5 può esserci qualsiasi cosa. Per recuperare "la parola es5 o es6, dovremmo utilizzare i limitatori di bordo  $regex: /\bes-?[5-6]\b/"
+  }
+
   res.send();
 });
 
@@ -59,3 +74,12 @@ async function run() {
   articoliCollection = blogDB.collection('articoli');
 }
 run().catch(err => console.log('Errore connessione: ' + err));
+
+// {
+//   _id: 60b5f6ba89e19f6f0943ba0e,
+//   titolo: 'Titolo articolo 1',
+//   testo: 'Articolo che parla di es58',
+//   autore: 'Andrea',
+//   tag: [ 'node.js', 'javascript', 'mongodb' ],
+//   voto: 1.7
+// }
