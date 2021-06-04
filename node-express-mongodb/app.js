@@ -41,16 +41,14 @@ app.get('/', async (req, res) => {
   //   console.log(articolo);
   // }
 
-  // voglio solo gli articoli dell'autore definito nel filtro - operatore $in
+  //condizione - articoli dell'autore Antonio con voti maggiori di 4 o minori di 1
   const filtro = {
-    autore: {
-      $in: ["Antonio", "Sofia"]
-      //$nin: ["Antonio", "Sofia"] //articoli che non hanno come autore Antonio o Sofia
-    },
-    voto : {
-      $gte: 3.8, // che hanno un voto superiore o uguale a 3.8
-      $lte:4.5  // in questo modo do un range di voto fino a 4.5
-    }
+    
+    autore: "Antonio",
+    $or: [
+      { voto : { $gte: 4 } }, // con l'operatore logico $or o è verificata questa condizione
+      { voto : { $lte: 1 } } //  o è verificata questa condizione
+    ]
   }
   const articoliCursor = await articoliCollection.find(filtro);
   while (await articoliCursor.hasNext()) {
