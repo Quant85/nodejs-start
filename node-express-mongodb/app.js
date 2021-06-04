@@ -50,7 +50,7 @@ app.get('/', async (req, res) => {
       //{ voto : { $lte: 1 } } //  o è verificata questa condizione
     ]
   }
-  const articoliCursor = await articoliCollection.find(filtro);
+  const articoliCursor = articoliCollection.find(filtro);
   while (await articoliCursor.hasNext()) {
     console.log(await articoliCursor.next());
   }
