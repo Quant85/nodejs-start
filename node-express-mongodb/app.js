@@ -41,20 +41,13 @@ app.get('/', async (req, res) => {
   //   console.log(articolo);
   // }
 
-  //condizione - articoli dell'autore Antonio con voti maggiori di 4 o minori di 1
-  //secondo caso - se almeno una delle due condiioni è verificato l'articolo è importato 
-  const filtro = {
-    $or: [
-      {autore: { $in: ["Antonio","Sofia"] } },
-      { voto : { $gte: 4 } }, // con l'operatore logico $or o è verificata questa condizione
-      //{ voto : { $lte: 1 } } //  o è verificata questa condizione
-    ]
-  }
-  const articoliCursor = articoliCollection.find(filtro);
-  while (await articoliCursor.hasNext()) {
-    console.log(await articoliCursor.next());
-  }
-  console.log(await articoliCursor.count());
+  //Andiamo ad aggiornare gli articoli che rispettano la condisione voto maggiore o uguale a 3.5, andando ad aggiungere con l'operatore $set, il campo in_veidenza: true
+  // const ris = await articoliCollection.updateMany({ voto: { $gte: 3.5 } }, { $set: { in_evidenza: true } });
+  // console.log(ris.result.nModified);
+  // Per recuperare i documenti che hanno il campo in_evidenza, possiamo utilizzare l'operatore $exists
+  articoliCollection.find({ in_evidenza: { $exists: true } }).forEach(articolo => {
+    console.log(articolo);
+  });
   res.send();
 });
 
