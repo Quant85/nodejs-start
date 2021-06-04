@@ -42,12 +42,12 @@ app.get('/', async (req, res) => {
   // }
 
   //condizione - articoli dell'autore Antonio con voti maggiori di 4 o minori di 1
+  //secondo caso - se almeno una delle due condiioni è verificato l'articolo è importato 
   const filtro = {
-    
-    autore: "Antonio",
     $or: [
+      {autore: { $in: ["Antonio","Sofia"] } },
       { voto : { $gte: 4 } }, // con l'operatore logico $or o è verificata questa condizione
-      { voto : { $lte: 1 } } //  o è verificata questa condizione
+      //{ voto : { $lte: 1 } } //  o è verificata questa condizione
     ]
   }
   const articoliCursor = await articoliCollection.find(filtro);
