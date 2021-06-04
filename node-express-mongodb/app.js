@@ -14,7 +14,7 @@ app.get('/', async (req, res) => {
   // incrementiamo il campo voto con l'operatore $inc
   const filtro = { _id: ObjectID('60b5f6ba89e19f6f0943ba0e') };
   // cosa vogliamo incrementare e di quanto
-  const update = { $pull: { tags: "javascript" } };
+  const update = { $pull: { tags: { $lt: 9 } } };
   await articoliCollection.updateOne(filtro, update);
 
   articoliCollection.findOne({}).then(articolo => {
