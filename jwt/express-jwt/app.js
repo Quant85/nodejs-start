@@ -12,17 +12,30 @@ app.use(cookieParser());
 app.get('/login', (req,res) => {
   //creaiamo l'oggetto payload
   const payload = { id: 1, isLogged: true};
-  const options = { expiresIn: '10s'}; // per quanto tempo deve esser valido il token 10 secondi 10 s 1 ora 1h 1 giorno 1d
+  const options = { expiresIn: '100s'}; // per quanto tempo deve esser valido il token 10 secondi 10 s 1 ora 1h 1 giorno 1d
+  const cookieSetting = {
+    expires: new Date(Date.now() + 1e5),//per dare un tempo di validità al cookie
+    httpOnly: true,
+    secure: false
+  };
+
   const token = jwt.sign(payload, process.env.JWT_KEY, options);
   // potremmo inviare un cookie
-  res.cookie('token', token).send();
+  res.cookie('token', token, cookieSetting).send();
 });
 
 // Ora non siamo più noi server ad inviare il cookie ma è il client ad inviare a noi(server) il cookie(token)
 app.get('/user/profile', (req,res) => {
-  // prima di poter accedere ai cookie dobbiamo utilizzare il pacchetto cookie-parser
-  console.log(req.cookies.token);
-  res.send();
+  const token = req.cookies.token;
+  if (!token) return res.status(401).send('Nessun token fornito!');
+  //per gestire l'eccezione di una firma non valida poichè stiamo lavorando con codice asincrono possiamo usare un trycatch, gestendo l'eccezione con il catch
+  try {
+  const payload = jwt.verify(token, process.env.JWT_KEY);
+  } catch (err) {
+    res.status(401).send('Il token non è valido oppure è scaduto');
+  }
+  console.log(payload);
+  res.send('Il token è valido');
 });
 
 
